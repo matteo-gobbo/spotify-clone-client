@@ -3,7 +3,7 @@ import useAuth from './hooks/useAuth'
 import SpotifyWebApi from "spotify-web-api-node"
 import TrackSearchResult from './TrackSearchResult'
 import { ITrack } from './models'
-
+import SpotifyWebPlayer from 'react-spotify-web-playback/lib'
 
 const spotifyApi = new SpotifyWebApi({
   clientId: '5e7d5adf318149c7b94320bf80a9daf0',
@@ -13,13 +13,18 @@ const Dashboard: React.FC<{ code: string }> = ({ code }) => {
 
   const [searchText, setSearchText] = useState('')
   const [searchResults, setSearchResults] = useState<Array<ITrack>>([])
-  const accessToken = useAuth(code)
+  const [playingTrack, setPlayingTrack] = useState<ITrack>()
+  const accessToken: string = useAuth(code)
 
-  console.log(searchResults)
+  const chooseTrack = (track: ITrack) => {
+    setPlayingTrack(track)
+  }
+
+  console.log('PLAYING TRACK', playingTrack)
 
   useEffect(() => {
     if(!accessToken) return;
-    spotifyApi.setAccessToken(accessToken ?? "")
+    spotifyApi.setAccessToken(accessToken)
   }, [accessToken])
 
   useEffect(() => {
@@ -50,6 +55,8 @@ const Dashboard: React.FC<{ code: string }> = ({ code }) => {
     })
   }, [searchText, accessToken])
 
+  console.log('ACCESS TOKEN', accessToken)
+
   return (
     <div>
       Dashboard
@@ -60,7 +67,7 @@ const Dashboard: React.FC<{ code: string }> = ({ code }) => {
         onChange={(e) => setSearchText(e.target.value)}/>
       <h1>Tracks</h1>
       {searchResults && searchResults.map((track) => {
-        return <TrackSearchResult key={track.uri} track={track}/>
+        return <TrackSearchResult key={track.uri} track={track} chooseTrack={chooseTrack}/>
       })}
     </div>
   )
