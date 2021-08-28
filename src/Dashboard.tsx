@@ -3,7 +3,6 @@ import useAuth from './hooks/useAuth'
 import SpotifyWebApi from "spotify-web-api-node"
 import TrackSearchResult from './TrackSearchResult'
 import { ITrack } from './models'
-import SpotifyWebPlayer from 'react-spotify-web-playback/lib'
 
 const spotifyApi = new SpotifyWebApi({
   clientId: '5e7d5adf318149c7b94320bf80a9daf0',
@@ -67,7 +66,7 @@ const Dashboard: React.FC<{ code: string }> = ({ code }) => {
         onChange={(e) => setSearchText(e.target.value)}/>
       <h1>Tracks</h1>
       {searchResults && searchResults.map((track) => {
-        return <TrackSearchResult key={track.uri} track={track} chooseTrack={chooseTrack}/>
+        return <TrackSearchResult accessToken={accessToken} key={track.uri} track={track} chooseTrack={chooseTrack}/>
       })}
     </div>
   )

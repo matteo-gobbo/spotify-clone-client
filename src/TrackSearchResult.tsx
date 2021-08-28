@@ -1,11 +1,23 @@
 import React from 'react'
 import { ITrack } from './models'
+import { currentPlayback, pausePlayback, startOrResumeUserPlayback } from './service/spotify'
 
-const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function }> = ({ track, chooseTrack }) => {
+const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function, accessToken: string }> = 
+  ({ track, chooseTrack, accessToken }) => {
 
-  const handlePlay = (e: any) => {
+  const handlePlay = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     chooseTrack(track)
+  }
+
+  const handlePlayback = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    await startOrResumeUserPlayback(accessToken, track.uri)
+  }
+
+  const handlePausePlayback = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    await pausePlayback(accessToken)
   }
 
   return (
@@ -16,6 +28,8 @@ const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function }> = ({
         <p style={{ margin: 0 }}>{track.artist}</p>
       </div>
       <button onClick={handlePlay}>Select</button>
+      <button onClick={handlePlayback}>Playback</button>
+      <button onClick={handlePausePlayback}>Pause</button>
     </div>
   )
 }
