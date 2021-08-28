@@ -1,6 +1,7 @@
 import React from 'react'
 import { ITrack } from './models'
-import { currentPlayback, pausePlayback, startOrResumeUserPlayback } from './service/spotify'
+import { pausePlayback, startOrResumeUserPlayback } from './service/spotify'
+import { Link } from 'react-router-dom'
 
 const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function, accessToken: string }> = 
   ({ track, chooseTrack, accessToken }) => {
@@ -24,7 +25,7 @@ const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function, access
     <div style={{ display: 'flex '}}>
       <img src={track.albumUrl} style={{ height: '64px', width: '64px' }} />
       <div>
-        <h3 style={{ margin: 0 }}>{track.title}</h3>
+        <Link to="/track"><h3 style={{ margin: 0 }}>{track.title}</h3></Link>
         <p style={{ margin: 0 }}>{track.artist}</p>
       </div>
       <button onClick={handlePlay}>Select</button>
