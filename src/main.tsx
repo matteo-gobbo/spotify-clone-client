@@ -8,19 +8,23 @@ import {
   Route,
 } from "react-router-dom";
 import Track from './Track';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route path="/track">
-          <Track />
-        </Route>
-        <Route path="/">
-          <App />
-        </Route>
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/track">
+            <Track />
+          </Route>
+          <Route path="/">
+            <App />
+          </Route>
+        </Switch>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )

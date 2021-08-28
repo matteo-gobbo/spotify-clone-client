@@ -2,13 +2,23 @@ import React from 'react'
 import { ITrack } from './models'
 import { pausePlayback, startOrResumeUserPlayback } from './service/spotify'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { selectTrack } from './redux/slice/currentTrackSlice'
 
-const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function, accessToken: string }> = 
-  ({ track, chooseTrack, accessToken }) => {
+interface TrackSearchResultProps {
+  track: ITrack
+  chooseTrack: Function
+  accessToken: string
+}
 
-  const handlePlay = (e: React.MouseEvent<HTMLButtonElement>) => {
+const TrackSearchResult: React.FC<TrackSearchResultProps> = ({ track, chooseTrack, accessToken }) => {
+
+  const dispatch = useDispatch()
+
+  const handleSelect = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
     chooseTrack(track)
+    dispatch(selectTrack(track))
   }
 
   const handlePlayback = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -28,7 +38,7 @@ const TrackSearchResult: React.FC<{ track: ITrack, chooseTrack: Function, access
         <Link to="/track"><h3 style={{ margin: 0 }}>{track.title}</h3></Link>
         <p style={{ margin: 0 }}>{track.artist}</p>
       </div>
-      <button onClick={handlePlay}>Select</button>
+      <button onClick={handleSelect}>Select</button>
       <button onClick={handlePlayback}>Playback</button>
       <button onClick={handlePausePlayback}>Pause</button>
     </div>
