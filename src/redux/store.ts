@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import selectTrackSlice from "./slice/currentTrackSlice";
+import selectTrackSlice from "./slice/selectedTrackSlice";
 
 export const store = configureStore({
   reducer: {

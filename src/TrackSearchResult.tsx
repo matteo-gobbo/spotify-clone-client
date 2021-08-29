@@ -3,7 +3,7 @@ import { ITrack } from './models'
 import { pausePlayback, startOrResumeUserPlayback } from './service/spotify'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { selectTrack } from './redux/slice/currentTrackSlice'
+import { selectTrack } from './redux/slice/selectedTrackSlice'
 
 interface TrackSearchResultProps {
   track: ITrack
