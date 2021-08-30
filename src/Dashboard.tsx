@@ -43,7 +43,7 @@ const Dashboard: React.FC<{ code: string }> = ({ code }) => {
         }, track.album.images[0])
 
         return {
-          artist: track.artists[0].name,
+          artists: track.artists.map(artist => artist.name),
           title: track.name,
           uri: track.uri,
           albumUrl: smallestAlbumImage.url
@@ -55,6 +55,7 @@ const Dashboard: React.FC<{ code: string }> = ({ code }) => {
   }, [searchText, accessToken])
 
   console.log('ACCESS TOKEN', accessToken)
+  console.log('ACCESS TOKEN', searchResults)
 
   return (
     <div>

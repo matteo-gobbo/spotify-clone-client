@@ -36,7 +36,11 @@ const TrackSearchResult: React.FC<TrackSearchResultProps> = ({ track, chooseTrac
       <img src={track.albumUrl} style={{ height: '64px', width: '64px' }} />
       <div>
         <Link to="/track"><h3 style={{ margin: 0 }}>{track.title}</h3></Link>
-        <p style={{ margin: 0 }}>{track.artist}</p>
+        <p style={{ margin: 0 }}>
+          {track.artists.map((artist, index) => {
+            return index > 0 ? ` - ${artist}` : artist}
+          )}
+        </p>
       </div>
       <button onClick={handleSelect}>Select</button>
       <button onClick={handlePlayback}>Playback</button>
